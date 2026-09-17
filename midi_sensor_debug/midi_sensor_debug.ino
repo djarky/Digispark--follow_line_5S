@@ -26,6 +26,15 @@ byte lineaValores[5];
 int rawValoresAnt[5];
 byte lineaValoresAnt[5];
 
+int ultimaDireccion = 0;
+
+//definir direciones
+
+#define D_LEFT   -1
+#define D_CENTRE  0
+#define D_RIGHT   1
+#define D_LOST    2
+
 // ============================================================
 // INICIALIZAR CALIBRACION
 // ============================================================
@@ -95,12 +104,9 @@ byte sensorLinea(int valor, byte i) {
 //CALCULO DE DIRECIONES SIMULANDO SU FUNCIONAMIENTO
 //---------------------------------------------
 
-//definir direciones
 
-#define D_LEFT   -1
-#define D_CENTRE  0
-#define D_RIGHT   1
-#define D_LOST    2
+
+#define UMBRAL_LINEA 80
 
 int calcularDireccion(int valores[]) {
 
@@ -178,7 +184,7 @@ void loop() {
     leerSensores(rawValores);
 
     // 2.RECALIBRAR SI NO ENCUENTRA LINEA
-    if(calcularDireccion(rawvalores)==D_LOST){
+    if(calcularDireccion(rawValores)==D_LOST){
       actualizarCalibracion(rawValores);
     }
 
