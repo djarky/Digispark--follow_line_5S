@@ -220,5 +220,22 @@ void loop() {
         }
     }
 
+    // 6. ENVIAR MIN DE CALIBRACION (CC 11 a CC 15)
+    for (byte i = 0; i < 5; i++) {
+        byte minMapeado = map(sensorMin[i], 0, 1023, 0, 127);
+
+        midi.sendControlChange(i + 11, minMapeado, 1);
+        midi.delay(1);
+    }
+
+    // 7. ENVIAR MAX DE CALIBRACION (CC 16 a CC 20)
+    for (byte i = 0; i < 5; i++) {
+        byte maxMapeado = map(sensorMax[i], 0, 1023, 0, 127);
+
+        midi.sendControlChange(i + 16, maxMapeado, 1);
+        midi.delay(1);
+    }
+
+
     midi.delay(5);
 }
