@@ -91,6 +91,8 @@ byte lineaValoresAnt[5];
 
 int ultimaDireccion = 0;
 
+byte repeticion_maniobra = 0;
+
 
 // ============================================================
 // INICIALIZAR CALIBRACION
@@ -356,10 +358,21 @@ void loop() {
     }
     if(ultimaDireccion != D_LOST){
       retroceder(VELOCIDAD_CURVA_FUERTE);
+      //para darle tiempo a retroceder y que no se quede vibrando como fax de los 80
+      repeticion_maniobra++;
+      if(repeticion_maniobra < 3){
+        delay(100); 
+      }else if (repeticion_maniobra < 6){ //y si no encuentra que retroceda un poco mas 
+        delay(200);
+      }else{
+        delay(1000); // y mas , aunque ya deberia dar 
+      }
       actualizarCalibracion(valores);
     }
     else{
       parar();
+      inicializarCalibracion(); //reiniciar la calibracion 
+      repeticion_maniobra = 0;
     }
   }
   else{
